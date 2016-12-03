@@ -1,0 +1,31 @@
+﻿<ion-view view-title="Game" ng-controller="GameCtrl">
+    <div class="bar bar-header bar-dark" id="title">
+        <h1 class="title"> {{level}}</h1>
+            <button class="button icon ion-android-refresh button-balanced" ng-click="ask_refresh()"></button>
+    </div>
+    <ion-content>
+        <div class="sodGrid" ng-init="initBoard()">
+                        <div ng-repeat="col in cols">
+                            <!-- append g because id shouldn't start with number for styling and my name is Grant so g it is -->
+                            <button ng-repeat="item in col" id="{{'g'+item.id}}" class="button sodButton" ng-click="selectedButton('g'+item.id)">{{item.value}}</button>
+                        </div>
+                            
+        </div>
+        <ion-scroll direction="x">
+            <div class="row">
+                <button class="num_button button button-block button-balanced" ng-click="clear()">clr</button>
+                <button class="num_button button button-block button-balanced " ng-click="fill(1)">1</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(2)">2</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(3)">3</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(4)">4</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(5)">5</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(6)">6</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(7)">7</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(8)">8</button>
+                <button class="num_button button button-block button-balanced" ng-click="fill(9)">9</button>
+                <button class="num_button button button-block button-balanced" ng-click="clear_all()">clr all</button>
+            </div>
+        </ion-scroll>
+        
+    </ion-content>
+</ion-view>

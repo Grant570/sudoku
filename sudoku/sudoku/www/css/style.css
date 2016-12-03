@@ -1,0 +1,100 @@
+﻿/* Empty. Add your own CSS if you like */
+.menu_button{
+    /*left:25%;*/
+    /*top:15%;*/
+    margin-top:5%;
+    min-width:200px;
+}
+.row{
+    top:0;
+    padding-top:0 !important;
+}
+.num_button{
+    margin-top:0 !important;
+}
+.aboutContent{
+    text-align:center;
+    margin-top:15%;
+}
+.author{
+    transition: all linear 0.5s;
+}
+.buttons{
+    margin-top:15%;
+    text-align:center;
+}
+.score{
+    text-align:center;
+    bottom:0;
+    font-size:xx-large;
+    margin-bottom:0;
+    font-weight:bold;
+    /*font-size:300% !important;*/
+}
+
+.copyright{
+    transition: all linear 0.5s;
+}
+.easter{
+    transition: all linear 0.5s;
+}
+
+.fade.ng-hide{
+    opacity:0;
+}
+.show.ng-hide{
+    opacity:100;
+}
+
+
+.bar bar-footer{
+    margin-bottom: 10px !important;
+    padding-top:0 !important;
+}
+
+.sodButton{
+    padding:0px !important;
+    min-width:31px !important;
+    width:25px !important;
+    border-style:solid;
+    border-width:1px;
+    border-color:gray;
+    /*float:left;*/
+}
+.sodGrid{
+    width:100%;
+    text-align:center;
+    margin-bottom:2px;
+    margin-top:20%;
+}
+
+/*top buttons*/
+#g0,#g1,#g2,#g3,#g4,#g5,#g6,#g7,#g8{
+    border-style:solid;
+    border-top-width:3px;
+    border-top-color:black;
+}
+/*bottom buttons*/
+#g72,#g73,#g74,#g75,#g76,#g77,#g78,#g79,#g80{
+    border-style:solid;
+    border-bottom-width:3px;
+    border-bottom-color:black;
+    /*border-bottom:thick black !important;*/
+}
+/*left edge buttons*/
+#g0,#g9,#g18,#g27,#g36,#g45,#g54,#g63,#g72,#g3,#g12,#g21,#g30,#g39,#g48,#g57,#g66,#g75{
+    border-style:solid;
+    border-left-width:3px;
+    border-left-color:black;
+}
+/*right edge buttons*/
+#g8,#g17,#g26,#g35,#g44,#g53,#g62,#g71,#g80,#g5,#g14,#g23,#g32,#g41,#g50,#g59,#g68,#g77{
+    border-style:solid;
+    border-right-width:3px;
+    border-right-color:black;
+}
+#g18,#g19,#g20,#g21,#g22,#g23,#g24,#g25,#g26,#g45,#g46,#g47,#g48,#g49,#g50,#g51,#g52,#g53{
+    border-style:solid;
+    border-bottom-width:3px;
+    border-bottom-color:black;
+}

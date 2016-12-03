@@ -1,0 +1,15 @@
+﻿    <ion-view view-title="Menu" ng-controller="MainMenuCtrl">
+        <div class="bar bar-header bar-dark">
+            <h1 class="title">Sudoku</h1>
+        </div>
+        <ion-content>
+            <div class="buttons">
+                <button ng-click="play('Easy')" class="button button-large button-positive menu_button">Easy</button><br />
+                <button ng-click="play('Medium')" class="button button-large button-energized menu_button">Medium</button><br />
+                <button ng-click="play('Hard')" class="button button-large button-assertive menu_button">Hard</button><br />
+                <button ng-click="about()" class="button button-large button-stable menu_button">About</button><br />
+            </div>
+            <h1 ng-init="getScore()" class="score">{{getScore()}}</h1>
+        </ion-content>
+       
+    </ion-view>

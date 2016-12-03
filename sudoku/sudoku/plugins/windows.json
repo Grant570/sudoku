@@ -1,0 +1,30 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "sudoku"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "sudoku"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "sudoku"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "sudoku"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "sudoku"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "sudoku"
+        }
+    },
+    "dependent_plugins": {}
+}
