@@ -478,7 +478,7 @@
     }
 
     $ionicPlatform.registerBackButtonAction(function () {
-        if ($scope.filled.length > 0 && $state.current.name === 'app.game') {
+        if ($scope.filled.length > 0 && $state.current.name === 'app.game' && $scope.is_changeable) {
             var stillPlaying = $ionicPopup.confirm({
                 title: 'Leave and Lose Progress?',
                 template: 'Your board will not be saved.'
