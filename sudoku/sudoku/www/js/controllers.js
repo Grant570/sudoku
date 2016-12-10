@@ -41,28 +41,24 @@
     $scope.level = level;
     //setup board
     $scope.initBoard = function () {
-        var rows = [];
-        var initnums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        var shuff = initnums;
-        rows.push(shuff);
-        for (var i = 1; i < 9; i++) {
-            if (i % 3 == 0) {
-                shuff = shift(shuff, 4);
-            }
-            else {
-                shuff = shift(shuff, 3);
-            }
-            rows.push(shuff);
-        }
+        var rows = initRows();
         swapRows(rows);
         var made_new_cols = makeCols(rows);
+        //console.log("rows to cols", made_new_cols);
+        //just added shuffleCols
+        made_new_cols = shuffleCols(made_new_cols);
+        
+        
+        
+        //BUG rows are cols and cols are rows?
         //keep this to reference later for checkin
         var solution = copy(made_new_cols);
         removeNums(level, made_new_cols);
-        var cols = convertToDict(made_new_cols);
-        var changeables = getNullIndices(cols);
+        var col_dict = convertToDict(made_new_cols);
+        var changeables = getNullIndices(col_dict);
         $scope.changeables = changeables;
-        $scope.cols = cols;
+        $scope.cols = col_dict;
+        $scope.col_dict = col_dict;
         $scope.is_changeable = true;
         //for clear all
         var filled = [];
@@ -88,6 +84,22 @@
         return shuffled;
     }
 
+    function initRows() {
+        var empty_rows = [];
+        var shuff = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        empty_rows.push(shuff);
+        //doesn't shuffle the first row so start with 1
+        for (var i = 1; i < 9; i++) {
+            if (i % 3 == 0) {
+                shuff = shift(shuff, 4);
+            }
+            else {
+                shuff = shift(shuff, 3);
+            }
+            empty_rows.push(shuff);
+        }
+        return empty_rows;
+    }
     
     
 
@@ -122,6 +134,7 @@
         return result;
     }
 
+    //might need work
     function swapRows(rows) {
         var groups = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
         var randNum = Math.floor( Math.random() *(14-1)+1);
@@ -131,15 +144,25 @@
                 shuffle(groups[i]);
                 var index1 = groups[i][0];
                 var index2 = groups[i][1];
-                swap(index1, index2, rows);
+                swap(index2, index1, rows);
             }
         }
+        
+        return rows;
     }
     
     function swap(index1, index2,rows) {
         var temp = rows[index1];
         rows[index1] = rows[index2];
         rows[index2] = temp;
+    }
+
+    function swapCols(index2, index1, cols) {
+        var cpy = copy(cols);
+        cpy[index2] = cols[index1];
+        cpy[index1] = cols[index2];
+        //console.log("copy", cpy);
+        return cpy;
     }
 
     function makeCols(rows) {
@@ -155,12 +178,19 @@
     }
 
     function shuffleCols(cols) {
+        var groups = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
+        this.cols = cols;
         var randNum = Math.floor(Math.random() * (14 - 1) + 1);
         for (var i = 0; i < randNum; i++) {
-            for (var j = 0; j < 9; j++) {
-                shift(cols[j], 3);
+            for (var j = 0; j < 3; j++) {
+                shuffle(groups[j]);
+                var index1 = groups[j][0];
+                var index2 = groups[j][1];
+                this.cols = swapCols(index2, index1, this.cols);
+
             }
         }
+        return this.cols;
     }
     
 

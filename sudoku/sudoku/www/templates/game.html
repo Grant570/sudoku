@@ -5,7 +5,7 @@
     </div>
     <ion-content>
         <div class="sodGrid" ng-init="initBoard()">
-                        <div ng-repeat="col in cols">
+                        <div ng-repeat="col in col_dict">
                             <!-- append g because id shouldn't start with number for styling and my name is Grant so g it is -->
                             <button ng-repeat="item in col" id="{{'g'+item.id}}" class="button sodButton" ng-click="selectedButton('g'+item.id)">{{item.value}}</button>
                         </div>
