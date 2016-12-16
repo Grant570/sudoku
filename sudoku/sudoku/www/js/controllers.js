@@ -115,18 +115,13 @@
     }
 
     function superShuffle(rows) {
-        //var cpy = copy(rows);
-        //console.log("rows before reflection", cpy);
-       
-        //var cpy2 = copy(rows);
-        //console.log("rows after reflection", cpy2);
 
         for (var i = 0; i < random(1, 25) ; i++) {
             reflect(rows);
            
             //shuffle the cols
             makeCols(rows);
-            for (var j = 0 ; j < random(0, 51) ; j++) {
+            for (var j = 0 ; j < random(2, 51) ; j++) {
                 shuffleCols(rows);
                 makeRows(rows);
                 reflect2(rows);
@@ -135,12 +130,13 @@
 
             //shuffle the rows
             makeRows(rows);
-            for (var j = 0; j < random(0, 50) ; j++) {
+            for (var j = 0; j < random(2, 50) ; j++) {
                 reflect2(rows);
                 swapRows(rows);
                 reflect(rows);
             }
             reflect(rows);
+            reflect2(rows);
         }
         makeCols(rows);
     }
