@@ -39,22 +39,16 @@
     //get the level for this game
     level = $stateParams["level"];
     $scope.level = level;
+    var rows = initRows();
     //setup board
     $scope.initBoard = function () {
         var rows = initRows();
-        swapRows(rows);
-        var made_new_cols = makeCols(rows);
-        //console.log("rows to cols", made_new_cols);
-        //just added shuffleCols
-        made_new_cols = shuffleCols(made_new_cols);
-        
-        
-        
-        //BUG rows are cols and cols are rows?
+        reflect2(rows);
+        superShuffle(rows);
         //keep this to reference later for checkin
-        var solution = copy(made_new_cols);
-        removeNums(level, made_new_cols);
-        var col_dict = convertToDict(made_new_cols);
+        var solution = copy(rows);
+        removeNums(level, rows);
+        var col_dict = convertToDict(rows);
         var changeables = getNullIndices(col_dict);
         $scope.changeables = changeables;
         $scope.cols = col_dict;
@@ -71,7 +65,7 @@
     //http://www.algosome.com/articles/create-a-solved-sudoku.html
     function shift(lst, num) {
         var shuffled = [];
-        var i, counter = 0;
+        var counter = 0;
         //do this 9 times
         while (counter < 9) {
             //reset to beginning of list
@@ -82,6 +76,82 @@
             shuffled[counter++] = current;   
         }
         return shuffled;
+    }
+
+    //upper right and lower left
+    function reflect(rows) {
+        //var cpy = copy(rows);
+        //console.log("rows before reflect", cpy);
+        for (var i = 0; i < 9; i++) {
+            for (var j = i+1; j < 9; j++) {
+                    var temp = rows[i][j];
+                    rows[i][j] = rows[j][i];
+                    rows[j][i] = temp;
+            }
+        }
+        //var cpy2 = copy(rows);
+        //console.log("rows after reflect", cpy2);
+    }
+
+    function reflect2(rows) {
+        //var cpy = copy(rows);
+        //console.log("before reflect2", cpy);
+        for (var i = 0; i < 9; i++) {
+            var limit = 8 - i;
+            for (var j = 0; j < limit; j++) {
+                //should add up to 8
+                var temp1 = 8 - i;
+                var temp2 = 8 - j;
+                //console.log("temp1,temp2", temp1, temp2);
+
+                //but then flip
+                var temp = rows[temp2][temp1];
+                rows[temp2][temp1] = rows[i][j];
+                rows[i][j] = temp;
+            }
+        }
+        //var cpy2 = copy(rows);
+        //console.log("after reflect2", cpy2);
+    }
+
+    function superShuffle(rows) {
+        //var cpy = copy(rows);
+        //console.log("rows before reflection", cpy);
+       
+        //var cpy2 = copy(rows);
+        //console.log("rows after reflection", cpy2);
+
+        for (var i = 0; i < random(1, 25) ; i++) {
+            reflect(rows);
+           
+            //shuffle the cols
+            makeCols(rows);
+            for (var j = 0 ; j < random(0, 51) ; j++) {
+                shuffleCols(rows);
+                makeRows(rows);
+                reflect2(rows);
+                makeCols(rows);
+            }
+
+            //shuffle the rows
+            makeRows(rows);
+            for (var j = 0; j < random(0, 50) ; j++) {
+                reflect2(rows);
+                swapRows(rows);
+                reflect(rows);
+            }
+            reflect(rows);
+        }
+        makeCols(rows);
+    }
+
+    function makeRows(cols) {
+        var cpy = copy(cols);
+        for (var i = 0; i < 9; i++) {
+            for (var j = 0; j < 9; j++) {
+                cols[i][j] = cpy[j][i];
+            }
+        }
     }
 
     function initRows() {
@@ -100,9 +170,11 @@
         }
         return empty_rows;
     }
-    
-    
 
+    function random(lower, upper){
+        return Math.floor(Math.random() * (upper - lower) + lower);
+    }
+    
     $scope.selectedButton = function (id) {
         //nothing selected
         if ($scope.selected == -1) {
@@ -136,8 +208,9 @@
 
     //might need work
     function swapRows(rows) {
+        //var original = copy(rows);
         var groups = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
-        var randNum = Math.floor( Math.random() *(14-1)+1);
+        var randNum = random(1, 14);
         for (var j = 0; j <= randNum; j++) {
             for (var i = 0; i < 3; i++) {
                 //shuffle the numbers
@@ -147,11 +220,12 @@
                 swap(index2, index1, rows);
             }
         }
-        
-        return rows;
+        //console.log("rows before swap", original);
+        //var cpy = copy(rows);
+        //console.log("rows after swap", cpy);
     }
     
-    function swap(index1, index2,rows) {
+    function swap(index1, index2, rows) {
         var temp = rows[index1];
         rows[index1] = rows[index2];
         rows[index2] = temp;
@@ -159,38 +233,32 @@
 
     function swapCols(index2, index1, cols) {
         var cpy = copy(cols);
-        cpy[index2] = cols[index1];
-        cpy[index1] = cols[index2];
-        //console.log("copy", cpy);
-        return cpy;
+        cols[index1] = cpy[index2];
+        cols[index2] = cpy[index1];
     }
 
     function makeCols(rows) {
-        var new_cols = [];
+        //make a copy for reference
+        var original = copy(rows);
         for (var i = 0; i < 9; i++) {
-            var new_col = [];
             for (var j = 0; j < 9; j++) {
-                new_col.push(rows[j][i]);
+                rows[j][i] = original[i][j];
             }
-            new_cols.push(new_col);
         }
-        return new_cols;
     }
 
     function shuffleCols(cols) {
         var groups = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
-        this.cols = cols;
         var randNum = Math.floor(Math.random() * (14 - 1) + 1);
         for (var i = 0; i < randNum; i++) {
             for (var j = 0; j < 3; j++) {
                 shuffle(groups[j]);
                 var index1 = groups[j][0];
                 var index2 = groups[j][1];
-                this.cols = swapCols(index2, index1, this.cols);
+                swapCols(index2, index1, cols);
 
             }
         }
-        return this.cols;
     }
     
 
